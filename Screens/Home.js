@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {SafeAreaView, TouchableOpacity ,Image, Button, StyleSheet} from 'react-native';
+import {gunsList} from '../Components/Guns'
 const Home = props => {
     const [PhoenixGuns, setPhoenixGuns] = useState([]); // list of guns in Phoenix Case
     const [notFinished, setNotFinished] = useState(true); // this is to ensure that the api call is finished before opening case
     useEffect(() => {
         const searchGuns = async() => {
-             let search = await fetch(`http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true`)
+            /*  **** VISIT THIS SITE TO GET TEMP ACCESS SO THAT WE ARE ABLE TO ACCESS CSGO BACKPACK: https://cors-anywhere.herokuapp.com/**** */
+             let search = await fetch(`https://cors-anywhere.herokuapp.com/http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true`)
             .then(response => response.json())
             .then(data => data.items_list)
             let guns = keys() // all the keys for the guns
@@ -83,129 +85,8 @@ const style = StyleSheet.create({
         height: 225
     }
 })
-const keys = () => { // this was made because importing a text file doesnt work, libraries caused many problems
-let x = ['MAG-7 | Heaven Guard (Factory New)', // 0
-    'MAG-7 | Heaven Guard (Field-Tested)',
-    'MAG-7 | Heaven Guard (Minimal Wear)',
-    'MAG-7 | Heaven Guard (Well-Worn)',
-    'StatTrak\u2122 MAG-7 | Heaven Guard (Factory New)',
-    'StatTrak\u2122 MAG-7 | Heaven Guard (Field-Tested)',
-    'StatTrak\u2122 MAG-7 | Heaven Guard (Minimal Wear)',
-    'StatTrak\u2122 MAG-7 | Heaven Guard (Well-Worn)',
-    'Negev | Terrain (Factory New)', // 8
-    'Negev | Terrain (Field-Tested)',
-    'Negev | Terrain (Minimal Wear)',
-    'Negev | Terrain (Well-Worn)',
-    'StatTrak\u2122 Negev | Terrain (Factory New)',
-    'StatTrak\u2122 Negev | Terrain (Field-Tested)',
-    'StatTrak\u2122 Negev | Terrain (Minimal Wear)',
-    'StatTrak\u2122 Negev | Terrain (Well-Worn)',
-    'StatTrak\u2122 UMP-45 | Corporal (Battle-Scarred)',
-    'StatTrak\u2122 UMP-45 | Corporal (Factory New)',
-    'StatTrak\u2122 UMP-45 | Corporal (Field-Tested)',
-    'StatTrak\u2122 UMP-45 | Corporal (Minimal Wear)',
-    'StatTrak\u2122 UMP-45 | Corporal (Well-Worn)',
-    'UMP-45 | Corporal (Battle-Scarred)',
-    'UMP-45 | Corporal (Factory New)', // 22
-    'UMP-45 | Corporal (Field-Tested)',
-    'UMP-45 | Corporal (Minimal Wear)',
-    'UMP-45 | Corporal (Well-Worn)',
-    'StatTrak\u2122 Tec-9 | Sandstorm (Battle-Scarred)',
-    'StatTrak\u2122 Tec-9 | Sandstorm (Field-Tested)',
-    'StatTrak\u2122 Tec-9 | Sandstorm (Minimal Wear)',
-    'StatTrak\u2122 Tec-9 | Sandstorm (Well-Worn)',
-    'Tec-9 | Sandstorm (Battle-Scarred)',
-    'Tec-9 | Sandstorm (Field-Tested)',
-    'Tec-9 | Sandstorm (Minimal Wear)', // 32
-    'Tec-9 | Sandstorm (Well-Worn)',
-    'FAMAS | Sergeant (Battle-Scarred)',
-    'FAMAS | Sergeant (Field-Tested)',
-    'FAMAS | Sergeant (Minimal Wear)', // 36
-    'FAMAS | Sergeant (Well-Worn)',
-    'StatTrak\u2122 FAMAS | Sergeant (Battle-Scarred)',
-    'StatTrak\u2122 FAMAS | Sergeant (Field-Tested)',
-    'StatTrak\u2122 FAMAS | Sergeant (Minimal Wear)',
-    'StatTrak\u2122 FAMAS | Sergeant (Well-Worn)',
-    'SG 553 | Pulse (Battle-Scarred)',
-    'SG 553 | Pulse (Field-Tested)',
-    'SG 553 | Pulse (Minimal Wear)', // 44
-    'SG 553 | Pulse (Well-Worn)',
-    'StatTrak\u2122 SG 553 | Pulse (Battle-Scarred)',
-    'StatTrak\u2122 SG 553 | Pulse (Field-Tested)',
-    'StatTrak\u2122 SG 553 | Pulse (Minimal Wear)',
-    'StatTrak\u2122 SG 553 | Pulse (Well-Worn)',
-    'MAC-10 | Heat (Battle-Scarred)',
-    'MAC-10 | Heat (Factory New)', // 51
-    'MAC-10 | Heat (Field-Tested)',
-    'MAC-10 | Heat (Minimal Wear)',
-    'MAC-10 | Heat (Well-Worn)',
-    'StatTrak\u2122 MAC-10 | Heat (Battle-Scarred)',
-    'StatTrak\u2122 MAC-10 | Heat (Factory New)',
-    'StatTrak\u2122 MAC-10 | Heat (Field-Tested)',
-    'StatTrak\u2122 MAC-10 | Heat (Minimal Wear)',
-    'StatTrak\u2122 MAC-10 | Heat (Well-Worn)',
-    'AUG | Chameleon (Battle-Scarred)',
-    'AUG | Chameleon (Factory New)', // 61
-    'AUG | Chameleon (Field-Tested)',
-    'AUG | Chameleon (Minimal Wear)',
-    'AUG | Chameleon (Well-Worn)',
-    'StatTrak\u2122 AUG | Chameleon (Battle-Scarred)',
-    'StatTrak\u2122 AUG | Chameleon (Factory New)',
-    'StatTrak\u2122 AUG | Chameleon (Field-Tested)',
-    'StatTrak\u2122 AUG | Chameleon (Minimal Wear)',
-    'StatTrak\u2122 AUG | Chameleon (Well-Worn)',
-    'StatTrak\u2122 P90 | Trigon (Battle-Scarred)',
-    'StatTrak\u2122 P90 | Trigon (Field-Tested)',
-    'StatTrak\u2122 P90 | Trigon (Minimal Wear)',
-    'StatTrak\u2122 P90 | Trigon (Well-Worn)',
-    'P90 | Trigon (Battle-Scarred)',
-    'P90 | Trigon (Field-Tested)',
-    'P90 | Trigon (Minimal Wear)', // 76
-    'P90 | Trigon (Well-Worn)',
-    'StatTrak\u2122 Nova | Antique (Factory New)',
-    'StatTrak\u2122 Nova | Antique (Field-Tested)',
-    'StatTrak\u2122 Nova | Antique (Minimal Wear)',
-    'Nova | Antique (Factory New)', // 81
-    'Nova | Antique (Field-Tested)',
-    'Nova | Antique (Minimal Wear)',
-    'StatTrak\u2122 AK-47 | Redline (Battle-Scarred)',
-    'StatTrak\u2122 AK-47 | Redline (Field-Tested)',
-    'StatTrak\u2122 AK-47 | Redline (Minimal Wear)',
-    'StatTrak\u2122 AK-47 | Redline (Well-Worn)',
-    'AK-47 | Redline (Battle-Scarred)',
-    'AK-47 | Redline (Field-Tested)',
-    'AK-47 | Redline (Minimal Wear)', // 90
-    'AK-47 | Redline (Well-Worn)',
-    'AWP | Asiimov (Battle-Scarred)',
-    'AWP | Asiimov (Field-Tested)', // 93
-    'AWP | Asiimov (Well-Worn)',
-    'StatTrak\u2122 AWP | Asiimov (Battle-Scarred)',
-    'StatTrak\u2122 AWP | Asiimov (Field-Tested)',
-    'StatTrak\u2122 AWP | Asiimov (Well-Worn)',
-    '\u2605 Bayonet | Ultraviolet (Battle-Scarred)',
-    '\u2605 Bayonet | Ultraviolet (Factory New)',// 99
-    '\u2605 Bayonet | Ultraviolet (Field-Tested)',
-    '\u2605 Bayonet | Ultraviolet (Minimal Wear)',
-    '\u2605 Bayonet | Ultraviolet (Well-Worn)',
-    '\u2605 StatTrak\u2122 Bayonet | Ultraviolet (Battle-Scarred)',
-    '\u2605 StatTrak\u2122 Bayonet | Ultraviolet (Factory New)',
-    '\u2605 StatTrak\u2122 Bayonet | Ultraviolet (Field-Tested)',
-    '\u2605 StatTrak\u2122 Bayonet | Ultraviolet (Minimal Wear)',
-    '\u2605 StatTrak\u2122 Bayonet | Ultraviolet (Well-Worn)',
-    '\u2605 StatTrak\u2122 Bayonet | Night (Battle-Scarred)',
-    '\u2605 StatTrak\u2122 Bayonet | Night (Factory New)',
-    '\u2605 StatTrak\u2122 Bayonet | Night (Field-Tested)',
-    '\u2605 StatTrak\u2122 Bayonet | Night (Minimal Wear)',
-    '\u2605 StatTrak\u2122 Bayonet | Night (Well-Worn)',
-    '\u2605 Bayonet | Night (Battle-Scarred)',
-    '\u2605 Bayonet | Night (Factory New)', // 114
-    '\u2605 Bayonet | Night (Field-Tested)',
-    '\u2605 Bayonet | Night (Minimal Wear)',
-    '\u2605 Bayonet | Night (Well-Worn)',
-    '\u2605 Bayonet | Tiger Tooth (Factory New)', // 118
-    '\u2605 Bayonet | Tiger Tooth (Minimal Wear)',
-    '\u2605 StatTrak\u2122 Bayonet | Tiger Tooth (Factory New)',
-    '\u2605 StatTrak\u2122 Bayonet | Tiger Tooth (Minimal Wear)']
+const keys = () => { // this was made because importing a text file doesnt work, libraries caused many problems **EDIT guns moved to seperate file**
+let x = gunsList
     return x;
 }
 export default Home;
