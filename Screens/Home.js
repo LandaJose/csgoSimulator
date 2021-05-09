@@ -7,7 +7,7 @@ const Home = props => {
     useEffect(() => {
         const searchGuns = async() => {
             /*  **** VISIT THIS SITE TO GET TEMP ACCESS SO THAT WE ARE ABLE TO ACCESS CSGO BACKPACK: https://cors-anywhere.herokuapp.com/**** */
-             let search = await fetch(`https://cors-anywhere.herokuapp.com/http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true`)
+             let search = await fetch('https://cors-anywhere.herokuapp.com/http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true')
             .then(response => response.json())
             .then(data => data.items_list)
             let guns = keys() // all the keys for the guns
@@ -20,7 +20,7 @@ const Home = props => {
     },[]) // only run ONCE
     return(
         <SafeAreaView 
-            style = {{alignItems: `center`, backgroundColor: 'white'}}>
+            style = {{alignItems: 'center', backgroundColor: 'white'}}>
             <TouchableOpacity // when the image is clicked display possible weapons
                 onPress = {() => props.navigation.navigate("Display Weapons", {guns: weaponsDisplayReturn(PhoenixGuns)})} // go to Display Weapons and transport over the weapons to display
                 disabled = {notFinished}>
