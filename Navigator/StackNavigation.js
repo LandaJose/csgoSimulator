@@ -1,17 +1,23 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
 import Home from '../Screens/Home';
 import DisplayWeapons from '../Screens/DisplayWeapons'
 import RandomGun from '../Screens/RandomGun'
+
+import SkinSearch from "../Screens/SkinSearch"
+import SkinSearchResults from '../Screens/SkinSearchResults';
 // 
 const Stack = createStackNavigator();
 
 const HomeScreenStack = props => {
     return(
-        <Stack.Navigator>
-            <Stack.Screen name = "Home" component = {Home}/>
+        <Stack.Navigator title = {SkinSearch}>
+            <Stack.Screen name = "Home" component = {Home} 
+             options = {{headerTitle: props => <SkinSearch {...props}/> }}
+            />
             <Stack.Screen name = "Display Weapons" component = {DisplayWeapons}/>
             <Stack.Screen name = "Random Gun" component = {RandomGun}/>
+            <Stack.Screen name = "SkinSearchResults" component = {SkinSearchResults}/>
         </Stack.Navigator>
     )
 }

@@ -5,7 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {HomeScreenStack} from './Navigator/StackNavigation'
 
 
-const App= props => {
+const App = props => {
   return (
     <NavigationContainer>
       <HomeScreenStack/>
