@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {SafeAreaView, TouchableOpacity ,Image, Button, StyleSheet, Platform} from 'react-native';
+import {SafeAreaView, TouchableOpacity ,Image, Button, StyleSheet, Platform, Text, View, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {gunsList} from '../Components/Guns'
 const Home = props => {
     const [PhoenixGuns, setPhoenixGuns] = useState([]); // list of guns in Phoenix Case
     const [notFinished, setNotFinished] = useState(true); // this is to ensure that the api call is finished before opening case
+    const [keyboardDismiss, setKeyboardDismiss] = useState(false);
     useEffect(() => {
         const searchGuns = async() => {
             let url = Platform.OS === 'web' ? 'https://cors-anywhere.herokuapp.com/http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true' : 'http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true'
@@ -17,28 +18,34 @@ const Home = props => {
                 PhoenixGuns.push(search[element])
             });
             setNotFinished(false);
+            Platform.OS === 'web' ? setKeyboardDismiss(true) : setKeyboardDismiss(false) 
         }
         searchGuns()
     },[]) // only run ONCE
     return(
-        <SafeAreaView 
-            style = {{alignItems: 'center', backgroundColor: 'white'}}>
-            <TouchableOpacity // when the image is clicked display possible weapons
-                onPress = {() => props.navigation.navigate("Display Weapons", {guns: weaponsDisplayReturn(PhoenixGuns)})} // go to Display Weapons and transport over the weapons to display
-                disabled = {notFinished}>
-                <Image
-                    source = {{
-                        uri: 'https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFUuh6qZJmlD7tiyl4OIlaGhYuLTzjhVupJ12urH89ii3lHlqEdoMDr2I5jVLFFSv_J2Rg/256fx256f'
-                    }}
-                    style = {style.caseImage}
-                />
-             </TouchableOpacity>
-            <Button
-                disabled = {notFinished} // to prevent the button from being pressed before useEffect is finished
-                onPress = {() => props.navigation.navigate("Random Gun", {gun: randomizer(PhoenixGuns)})}
-                title = 'Open Case'
-
-            />
+        <SafeAreaView style = {styles.container}>
+            <TouchableWithoutFeedback style={{flex: 1}} disabled={keyboardDismiss} onPress={() => Keyboard.dismiss()}>
+                <View style={{flex:1}}>
+                    <TouchableOpacity // when the image is clicked display possible weapons
+                        onPress = {() => props.navigation.navigate("Display Weapons", {guns: weaponsDisplayReturn(PhoenixGuns)})} // go to Display Weapons and transport over the weapons to display
+                        disabled = {notFinished}
+                        style={styles.viewCase}>
+                        <Image
+                            source = {{
+                                uri: 'https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFUuh6qZJmlD7tiyl4OIlaGhYuLTzjhVupJ12urH89ii3lHlqEdoMDr2I5jVLFFSv_J2Rg/256fx256f'
+                            }}
+                            style = {styles.caseImage}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        disabled = {notFinished} // to prevent the button from being pressed before useEffect is finished
+                        onPress = {() => props.navigation.navigate("Random Gun", {gun: randomizer(PhoenixGuns)})}
+                        style={styles.openCaseButton}>
+                        <Text style={{color: 'white'}}>Open Case</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.loading}>{notFinished ? "Case Contents Loading Please Wait..." : ""}</Text>
+                </View>
+            </TouchableWithoutFeedback>
         </SafeAreaView>
     )
 }
@@ -81,10 +88,37 @@ const weaponsDisplayReturn = (guns) => {
     });
     return gunsDisplay
 }
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     caseImage: {
         width: 225,
-        height: 225
+        height: 225,
+        alignSelf: 'center',
+    },
+    container: {
+        backgroundColor: '#273c75',
+        flex: 1
+    },
+    openCaseButton: {
+        backgroundColor: '#192a56',
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '5%',
+        marginHorizontal: 10,
+        borderRadius: 5,
+        height: '5%',
+    },
+    viewCase: {
+        borderRadius: 5,
+        marginHorizontal: 10,
+        height: '30%',
+    },
+    loading: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: 'white',
+        marginTop: 10,
+        textAlign: 'center'
     }
 })
 const keys = () => { // this was made because importing a text file doesnt work, libraries caused many problems **EDIT guns moved to seperate file**
