@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {SafeAreaView, Button, StyleSheet, Text, TextInput, Platform, RefreshControl} from 'react-native';
+import {SafeAreaView, Button, StyleSheet, Text, TextInput, Platform, RefreshControl, View, TouchableOpacity, Touchable} from 'react-native';
 import {createDbTable, addToDb, addToDbBulk, fetchAllData, fetchSpecificData} from '../DBConnection'
 
 
@@ -58,43 +58,58 @@ const SkinSearch = props => {
             mountedRef.current = false
         }
         else{
-            navigation.navigate('SkinSearchResults', {skinResults: skinResults});
+            navigation.navigate('Skin Search Results', {skinResults: skinResults});
         }
     },[skinResults])
 
 
     const searchHandler = (data) => {
-        console.log(data)
         let searchArray = [];
         for (let index = 0; index < data.length; index++) {
             searchArray.push(data[index])
         }
-        console.log(searchArray)
         setSkinResults(searchArray)
     }
     return(
-        <SafeAreaView> 
-            <Text>{props.children}</Text>
-            <TextInput 
-            value = {searchSkinName}
-            onChangeText = {(text) => setSearchSkinName(text)}
-            placeholder = "Search Skin Name!"/>
-            <Button title="Search" onPress={() => {
+        <SafeAreaView style={styles.container}> 
+            <TextInput style={styles.searchBox} placeholderTextColor='white' value = {searchSkinName} onChangeText = {(text) => setSearchSkinName(text)} placeholder = "Search Skin Name!"/>
+            <View style={{flex: 1}}>{/* SPACER SO THAT INPUT BOX AND BUTTON HAVE SOME SPACE BETWEEN EACH OTHER */}</View> 
+            <TouchableOpacity style={styles.button} onPress={() => {
                 if(searchSkinName.length < 3){
                     alert("Enter 3 or more characters!")
                 }else{
                     fetchSpecificData(searchSkinName, searchHandler);
                 }
-                
                 }}
-                disabled = {notFinished} />
-
+                disabled = {notFinished}>
+                <Text style={styles.buttonText}>Search</Text>
+            </TouchableOpacity>
         </SafeAreaView>
         
     )
 
 }
-
-
-
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+    },
+    searchBox: {
+        flex: 26,
+        height: 35,
+        color: 'white',
+        paddingLeft: 5,
+        borderBottomWidth: 1,
+        borderColor: 'white'
+    },
+    button: {
+        flex:8,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#273c75',
+    },
+    buttonText: {
+        color: 'white'
+    }
+})
 export default SkinSearch;

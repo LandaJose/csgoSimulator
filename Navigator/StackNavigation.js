@@ -13,11 +13,11 @@ const HomeScreenStack = props => {
     return(
         <Stack.Navigator title = {SkinSearch}>
             <Stack.Screen name = "Home" component = {Home} 
-             options = {{headerTitle: props => <SkinSearch {...props}/> }}
+             options = {{headerTitle: props => <SkinSearch {...props}/>, headerStyle: {backgroundColor: '#192a56'}}}
             />
-            <Stack.Screen name = "Display Weapons" component = {DisplayWeapons}/>
-            <Stack.Screen name = "Random Gun" component = {RandomGun}/>
-            <Stack.Screen name = "SkinSearchResults" component = {SkinSearchResults}/>
+            <Stack.Screen name = "Display Weapons" component = {DisplayWeapons} options = {{headerTintColor: 'white', headerStyle: {backgroundColor: '#192a56'}}}/>
+            <Stack.Screen name = "Random Gun" component = {RandomGun} options = {{headerTintColor: 'white', headerStyle: {backgroundColor: '#192a56'}}}/>
+            <Stack.Screen name = "Skin Search Results" component = {SkinSearchResults} options = {{headerTintColor: 'white', headerStyle: {backgroundColor: '#192a56'}}}/>
         </Stack.Navigator>
     )
 }

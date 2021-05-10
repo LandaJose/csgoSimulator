@@ -8,14 +8,14 @@ const SkinSearchResults = props =>{
     const results = props.route.params.skinResults
 
     const Item = ({ skinName, icon_url, rarity }) => (
-        <View>
+        <View style={styles.itemContainer}>
             <Image source = {{
                 uri: 'https://steamcommunity-a.akamaihd.net/economy/image/'+icon_url
             }}
             style={styles.image}
             />
-             <Text>{skinName}</Text>
-             <Text>{rarity}</Text>
+             <Text style={styles.gunText}>{skinName}</Text>
+             <Text style={styles.gunText}>{rarity}</Text>
          </View>
       );
 
@@ -29,7 +29,7 @@ const SkinSearchResults = props =>{
       
 
     return(
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             <FlatList
                 data={results}
                 renderItem={renderItem}
@@ -41,12 +41,25 @@ const SkinSearchResults = props =>{
 
 const styles = StyleSheet.create({
     image: {
-        width: 100,
-        height: 100,
-        //width: '100%',
-        //height: '100%',
-      
+        width: 350,
+        height: 250,
     },
+    container: {
+        backgroundColor: '#273c75'
+    },
+    itemContainer: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#192a56',
+        marginVertical: 5,
+        marginHorizontal: 15,
+        borderRadius: 10,
+    },
+    gunText: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: 'white'
+    }
 
 
 });
