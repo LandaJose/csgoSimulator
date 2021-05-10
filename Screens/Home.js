@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import {SafeAreaView, TouchableOpacity ,Image, Button, StyleSheet} from 'react-native';
+import {SafeAreaView, TouchableOpacity ,Image, Button, StyleSheet, Platform} from 'react-native';
 import {gunsList} from '../Components/Guns'
 const Home = props => {
     const [PhoenixGuns, setPhoenixGuns] = useState([]); // list of guns in Phoenix Case
     const [notFinished, setNotFinished] = useState(true); // this is to ensure that the api call is finished before opening case
     useEffect(() => {
         const searchGuns = async() => {
+            let url = Platform.OS === 'web' ? 'https://cors-anywhere.herokuapp.com/http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true' : 'http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true'
             /*  **** VISIT THIS SITE TO GET TEMP ACCESS SO THAT WE ARE ABLE TO ACCESS CSGO BACKPACK: https://cors-anywhere.herokuapp.com/**** */
-             let search = await fetch('https://cors-anywhere.herokuapp.com/http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true')
+            //https://cors-anywhere.herokuapp.com/http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true
+             let search = await fetch(url)
             .then(response => response.json())
             .then(data => data.items_list)
             let guns = keys() // all the keys for the guns

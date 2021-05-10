@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {SafeAreaView, Button, StyleSheet, Text, TextInput,} from 'react-native';
-import {createDbTable, addToDb, fetchAllData, fetchSpecificData} from '../DBConnection'
+import {SafeAreaView, Button, StyleSheet, Text, TextInput, Platform, RefreshControl} from 'react-native';
+import {createDbTable, addToDb, addToDbBulk, fetchAllData, fetchSpecificData} from '../DBConnection'
 
 
 import {useNavigation} from '@react-navigation/native' 
@@ -12,22 +12,31 @@ const SkinSearch = props => {
     const [notFinished, setNotFinished] = useState(true) // this is to ensure that the api call is finished before opening case
     const [searchSkinName, setSearchSkinName] = useState('')
 
+
     const navigation = useNavigation()
+
+
 
     useEffect(() => {
         const searchGuns = async() => {
+            let url = Platform.OS === 'web' ? 'https://cors-anywhere.herokuapp.com/http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true' : 'http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true'
             /*  **** VISIT THIS SITE TO GET TEMP ACCESS SO THAT WE ARE ABLE TO ACCESS CSGO BACKPACK: https://cors-anywhere.herokuapp.com/**** */
-             let search = await fetch('https://cors-anywhere.herokuapp.com/http://csgobackpack.net/api/GetItemsList/v2/?prettyprint=true')
+            //https://cors-anywhere.herokuapp.com/
+             let search = await fetch(url)
             .then(response => response.json())
             .then(data => data.items_list)
             
             const keys = Object.keys(search)
 
+            let gunsList = [];
             keys.forEach((key, index)=> {
-                addToDb(search[key].name, search[key].icon_url, search[key].rarity, search[key].exterior)
-            })
+                gunsList.push(search[key])    
+               
+            });
+            addToDbBulk(gunsList);
             
-            
+        
+
             setNotFinished(false);
         }
 
@@ -55,10 +64,12 @@ const SkinSearch = props => {
 
 
     const searchHandler = (data) => {
+        console.log(data)
         let searchArray = [];
         for (let index = 0; index < data.length; index++) {
             searchArray.push(data[index])
         }
+        console.log(searchArray)
         setSkinResults(searchArray)
     }
     return(
